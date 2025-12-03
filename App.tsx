@@ -8,7 +8,7 @@ import { AppData, Course, Student, Payment, PaymentStatus } from './types';
 import { getData, generatePaymentsForEnrollment } from './services/storage';
 import { Menu } from 'lucide-react';
 
-const API_URL = 'http://localhost:3001/api';
+const API_URL = '/api';
 
 const App: React.FC = () => {
   const [data, setData] = useState<AppData>({ students: [], courses: [], payments: [] });
