@@ -1,0 +1,5 @@
+{
+  "name": "KursYönetim",
+  "description": "Öğrenci, ders ve ödeme takibi için kapsamlı kurs yönetim sistemi.",
+  "requestFramePermissions": []
+}

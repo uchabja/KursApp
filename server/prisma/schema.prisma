@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Course {
+  id           String       @id @default(uuid())
+  name         String
+  startDate    DateTime
+  fee          Int
+  period       String
+  scheduleDays String[]
+  scheduleTime String
+  notes        String
+  enrollments  Enrollment[]
+  payments     Payment[]
+}
+
+model Student {
+  id          String       @id @default(uuid())
+  firstName   String
+  lastName    String
+  phone       String?
+  dob         DateTime
+  motherName  String?
+  motherPhone String?
+  fatherName  String?
+  fatherPhone String?
+  notes       String?
+  status      String       @default("active") // active, passive, prereg
+  enrollments Enrollment[]
+  payments    Payment[]
+}
+
+model Enrollment {
+  studentId String
+  courseId  String
+  joinDate  DateTime
+  student   Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  course    Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@id([studentId, courseId])
+}
+
+model Payment {
+  id          String   @id @default(uuid())
+  studentId   String
+  courseId    String
+  periodStart DateTime
+  periodEnd   DateTime
+  amount      Int
+  status      String
+  dueDate     DateTime
+  paidDate    DateTime?
+  student     Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+}
